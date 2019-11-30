@@ -10,17 +10,8 @@ from retrying import retry
 @retry(stop_max_attempt_number=5)
 def download(img_url, title, i):
     # 图片下载
-    # try:
     time.sleep(1)
-
     img_data = requests.get(img_url, timeout=60)
-    # except requests.exceptions.ConnectionError:
-    #     return
-    # except requests.exceptions.ReadTimeout:
-    #     try:
-    #         img_data = requests.get(img_url, timeout=30)
-    #     except:
-    #         return
     with open('./美女图片爬取结果/{}/{}.jpg'.format(title, i), 'wb') as file:
         file.write(img_data.content)
     print("{}成功下载一张mm.jpg".format(i))
@@ -34,14 +25,6 @@ def get_img_url(content_link, title, i):
     # try:
     time.sleep(1)
     res = requests.get(page_link, timeout=60)
-    # except requests.exceptions.ConnectionError:
-    #     return
-    # except requests.exceptions.ReadTimeout:
-    #     try:
-    #         res = requests.get(page_link, timeout=30)
-    #     except:
-    #         return
-    # 正则获取图片地址
     content_re = re.findall(r'<a href=".*"><img alt=".*" src="(.*)" /></a></span>', res.text)
     # 拼接完整图片地址
     if not content_re:
